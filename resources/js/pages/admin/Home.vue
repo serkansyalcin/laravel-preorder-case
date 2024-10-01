@@ -1,5 +1,4 @@
 <script setup></script>
-
 <template>
-  <RouterView />
+  <h1>Admin - Home</h1>
 </template>
