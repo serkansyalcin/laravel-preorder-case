@@ -17,7 +17,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    <main id="app" class="min-h-screen bg-gray-100">
+    <main id="app" class="">
         {{ $slot }}
     </main>
 </body>

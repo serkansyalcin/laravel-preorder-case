@@ -6,14 +6,26 @@ const axiosInstance = axios.create({
   timeout: 10000,
 });
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // If token exists, add it to the headers
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+
 axiosInstance.interceptors.response.use(
   response => response,
   error => {
-    if (error.response && error.response.status === 401) {
-      const userType = error.response.data?.type;
-
-      // Check user-type and redirect accordingly
-      if (userType === 'admin') {
+    if (error.response && [401, 403].includes(error.response.status)) {
+      if (location.pathname.startsWith('/admin')) {
         router.push('/admin/login');
       } else {
         router.push('/');

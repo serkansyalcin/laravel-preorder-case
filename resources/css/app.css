@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    body {
+        @apply bg-gray-50;
+    }
+
+    *,
+    *::before,
+    *::after {
+        @apply border-gray-200;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+        @apply outline-none;
+    }
+}
+
 @layer components {
     .container {
         @apply max-w-screen-lg mx-auto p-4;

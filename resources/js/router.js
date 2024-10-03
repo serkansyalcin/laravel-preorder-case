@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router"
 import UserLayout from "./layouts/User/Index.vue"
 import AdminLayout from "./layouts/Admin/Index.vue"
+import useUser from "./store/user"
 
 const routes = [
   {
@@ -15,11 +16,22 @@ const routes = [
   },
   {
     path: '/admin',
-    component: AdminLayout,
     children: [
       {
         path: '',
-        component: () => import(/* webpackChunkName: "home" */ './pages/admin/Home.vue')
+        component: AdminLayout,
+        children: [
+          {
+            path: '',
+            name: "AdminDashboard",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/Home.vue')
+          }
+        ]
+      },
+      {
+        path: 'login',
+        name: 'AdminLogin',
+        component: () => import(/* webpackChunkName: "admin-login" */ './pages/admin/Login.vue')
       }
     ]
   },
@@ -32,6 +44,35 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  const user = useUser()
+  const userData = user.user;
+  const token = user.token;
+  const isAdminRequest = to.path.includes('/admin');
+  if (isAdminRequest) {
+    const isAdminLoginPage = to.path === '/admin/login'
+    if (isAdminLoginPage) {
+      if (token && userData && userData.is_admin) {
+        return next({ path: '/admin' })
+      } else {
+        return next()
+      }
+    }
+
+    if (userData && !userData.is_admin) {
+      return next({ path: '/' })
+    }
+
+    if (!token || !userData) {
+      return next({ path: '/admin/login' });
+    }
+
+    return next()
+  } else {
+    return next()
+  }
 })
 
 export default router;
