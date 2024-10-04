@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axiosInstance from "../../lib/axios";
+import ProductCatalog from "../../components/ProductCatalog.vue";
 
 const apiLoading = ref(false);
 const apiMessage = ref("");
@@ -20,11 +21,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h1>User - Home</h1>
-
   <div v-if="apiLoading">Loading...</div>
-
   <div v-else>
     <p>{{ apiMessage }}</p>
   </div>
+  <ProductCatalog />
 </template>
