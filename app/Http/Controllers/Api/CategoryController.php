@@ -116,7 +116,7 @@ class CategoryController extends Controller
         $category = $this->categoryService->update([
             'name' => trim($request->name),
             'slug' => $slug
-        ], $request->id);
+        ], $id);
 
         if (!$category) {
             return response()->json(['message' => 'Category not updated'], 404);

@@ -18,15 +18,15 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function update(array $data, $id)
     {
-        $user = Category::findOrFail($id);
-        $user->update($data);
-        return $user;
+        $category = Category::findOrFail($id);
+        $category->update($data);
+        return $category;
     }
 
     public function delete($id)
     {
-        $user = Category::findOrFail($id);
-        $user->delete();
+        $category = Category::findOrFail($id);
+        $category->delete();
     }
 
     public function find($id)
