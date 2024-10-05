@@ -22,6 +22,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryService::class, function ($app) {
             return new CategoryService($app->make(CategoryRepositoryInterface::class));
         });
+
+        //product
+        $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+        $this->app->bind(ProductService::class, function ($app) {
+            return new ProductService($app->make(ProductRepositoryInterface::class));
+        });
     }
 
     /**
