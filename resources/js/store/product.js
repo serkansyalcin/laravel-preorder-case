@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import axiosInstance from "../lib/axios";
 
-const userProduct = defineStore('product', () => {
+const useProduct = defineStore('product', () => {
   const product = ref(null)
 
   // Fetching the user detials if token found in localstorage
