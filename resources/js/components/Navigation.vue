@@ -33,7 +33,9 @@
                         class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">Users
                     </RouterLink>
                     <RouterLink to="/admin/profile"
-                        class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">Profile
+                        class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">{{
+                            dataUser.user.name
+                        }}
                     </RouterLink>
                     <button @click="logout" class="px-4 py-2 bg-red-600 text-white text-sm rounded-md">
                         Logout
@@ -44,14 +46,19 @@
         <!-- Mobile Menu -->
         <div v-if="isOpen" class="md:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#"
-                    class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
-                <a href="#"
-                    class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">Products</a>
-                <a href="#"
-                    class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">Orders</a>
-                <a href="#"
-                    class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">Users</a>
+                <RouterLink to="/admin"
+                    class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
+                    Dashboard</RouterLink>
+                <RouterLink to="/admin/products"
+                    class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
+                    Products</RouterLink>
+                <RouterLink to="/admin/orders"
+                    class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
+                    Orders</RouterLink>
+                <RouterLink to="/admin/profile"
+                    class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">{{
+                        dataUser.user.name
+                    }}</RouterLink>
                 <button @click="logout" class="px-4 py-2 bg-red-600 text-white text-sm rounded-md">
                     Logout
                 </button>
@@ -60,16 +67,18 @@
     </nav>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            isOpen: false,
-        };
-    },
+<script setup>
+import { ref, onMounted } from "vue";
+import router from "../router";
+import useUser from '../store/user';
+
+const dataUser = useUser();
+const isOpen = ref(false);
+
+const logout = async () => {
+    await user.logout();
+    router.push({
+        name: 'AdminLogin'
+    })
 };
 </script>
-
-<style scoped>
-/* Add any additional custom styles if needed */
-</style>
