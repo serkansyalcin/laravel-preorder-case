@@ -74,8 +74,6 @@ const isOpen = ref(false);
 
 const logout = async () => {
   await dataUser.logout();
-  router.push({
-    name: 'AdminLogin'
-  })
+  router.go('/')
 };
 </script>
