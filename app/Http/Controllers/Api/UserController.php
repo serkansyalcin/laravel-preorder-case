@@ -44,7 +44,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3|max:20',
+            'first_name' => 'required|min:3|max:20',
+            'last_name' => 'required|min:3|max:20',
             'email' => 'required|email|unique:\App\Models\User,email',
             'password' => 'required|min:6|max:12|confirmed',
             'phone' => 'required|min:10|max:16'
@@ -58,7 +59,8 @@ class UserController extends Controller
         $password = Hash::make($password);
 
         $user = $this->userService->create([
-            'name' => trim($request->name),
+            'first_name' => trim($request->first_name),
+            'last_name' => trim($request->last_name),
             'email' => trim($request->email),
             'password' => $password,
             'phone' => trim($request->phone),
@@ -108,7 +110,8 @@ class UserController extends Controller
 
         $rules = [
             'id' => 'required|exists:\App\Models\User,id',
-            'name' => 'required|min:3|max:20',
+            'first_name' => 'required|min:3|max:20',
+            'last_name' => 'required|min:3|max:20',
             'email' => 'required|email|unique:\App\Models\User,email,' . $id,
             'phone' => 'required|min:10|max:16',
         ];
@@ -124,7 +127,8 @@ class UserController extends Controller
         }
 
         $updateData = [
-            'name' => trim($request->name),
+            'first_name' => trim($request->first_name),
+            'last_name' => trim($request->last_name),
             'email' => trim($request->email),
             'phone' => trim($request->phone),
         ];

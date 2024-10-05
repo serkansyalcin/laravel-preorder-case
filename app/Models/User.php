@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -20,7 +21,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'phone',
         'password',
@@ -48,6 +50,11 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_admin' => 'boolean'
         ];
+    }
+
+    public function order(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 
     public function scopeThatIsUser(Builder $query)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminLoginRequest;
+use App\Http\Requests\UserLoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,16 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function userLogin(Request $request)
+    /**
+     * Handle an admin login request.
+     *
+     * @param  \App\Http\Requests\UserLoginRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+
+    public function userLogin(UserLoginRequest $request)
     {
         $user = User::where(['email' => $request->email, 'is_admin' => false])->first();
 
@@ -22,12 +32,11 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'token' => $user->createToken("user." . $user->name, ['user'])->plainTextToken,
+            'token' => $user->createToken("user." . $user->email, ['user'])->plainTextToken,
             'data' => $user,
-            'message' => 'login successfully'
+            'message' => 'User login successfully'
         ]);
     }
-
 
     /**
      * Handle an admin login request.
