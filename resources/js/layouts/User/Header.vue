@@ -2,7 +2,9 @@
   <header class="container">
     <div class="p-4 bg-white rounded-md">
       <div class="flex-shrink-0">
-        <a href="#" class="text-2xl font-bold text-gray-800">PreOrder</a>
+        <RouterLink to="/" class="text-2xl font-bold text-gray-800">
+          PreOrder
+        </RouterLink>
       </div>
     </div>
   </header>

@@ -11,6 +11,12 @@ const routes = [
       {
         path: '',
         component: () => import(/* webpackChunkName: "home" */ './pages/user/Home.vue')
+      },
+      {
+        path: 'product/:productId',
+        name: 'ProductDetail',
+        component: () => import(/* webpackChunkName: "admin-home" */ './pages/user/product/productDetail.vue'),
+        props: true, // Allows passing route params as props
       }
     ]
   },

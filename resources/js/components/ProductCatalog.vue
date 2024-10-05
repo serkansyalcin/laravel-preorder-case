@@ -3,8 +3,8 @@
         <div v-if="!showCheckoutForm">
             <h1 class="text-3xl font-bold mb-6">Product Catalog</h1>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <ProductCard v-for="product in products" :key="product.id" :product="product"
-                    @add-to-cart="addToCart" />
+                <ProductCard v-for="product in products" :key="product.id" :product="product" @add-to-cart="addToCart"
+                    @show-product="showProduct" />
             </div>
         </div>
         <!-- Cart Table -->
@@ -97,14 +97,19 @@
             </button>
         </form>
     </div>
+
+    <ProductDetailModal v-if="isVisible" :product="selectedProduct" :isVisible="isVisible" @add-to-cart="addToCart"
+        @cancel="closeModal" />
 </template>
 
 <script>
 import ProductCard from './ProductCard.vue';
+import ProductDetailModal from './ProductDetailModal.vue';
 
 export default {
     components: {
         ProductCard,
+        ProductDetailModal
     },
     data() {
         return {
@@ -126,6 +131,8 @@ export default {
                 email: null,
                 phone: null,
             },
+            selectedProduct: null,
+            isVisible: false
         };
     },
     computed: {
@@ -144,6 +151,7 @@ export default {
             } else {
                 this.cart.push({ ...product, quantity: 1 });
             }
+            this.isVisible = false;
         },
         increaseQty(item) {
             item.quantity++;
@@ -174,6 +182,13 @@ export default {
                 this.order = { firstName: '', lastName: '', email: '', phone: '' }; // Reset form
                 this.cart = [];
             }
+        },
+        showProduct(product) {
+            this.selectedProduct = product;
+            this.isVisible = true;
+        },
+        closeModal() {
+            this.isVisible = false;
         }
     },
 };

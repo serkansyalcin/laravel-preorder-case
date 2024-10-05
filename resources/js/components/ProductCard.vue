@@ -1,6 +1,7 @@
 <template>
     <div class="bg-white shadow-lg rounded-lg p-4 flex-col justify-between">
-        <img :src="product.image" :alt="product.name" class="w-full h-32 object-cover rounded-t-lg mb-4">
+        <img :src="product.image" :alt="product.name" class="w-full h-32 object-cover rounded-t-lg mb-4"
+            @click="$emit('show-product', product)">
         <h3 class="text-l font-semibold mb-2 h-12">{{ product.name }}</h3>
         <div class="flex justify-between items-center content-around">
             <p class="text-blue-700 text-l font-bold mb-4">$ {{ product.price }}</p>
