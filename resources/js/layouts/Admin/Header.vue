@@ -1,21 +1,9 @@
 <template>
-  <header class="container">
-    <div
-      class="p-4 bg-white flex items-center gap-4 justify-between rounded-md"
-    >
-      <router-link
-        :to="{ name: 'AdminDashboard' }"
-        class="block text-lg font-bold"
-        >PreOrder</router-link
-      >
-      <button @click="logout" class="px-4 py-2 bg-red-600 text-white text-sm rounded-md">
-        Logout
-      </button>
-    </div>
-  </header>
+  <Navigation />
 </template>
 
 <script setup>
+import Navigation from "../../components/Navigation.vue";
 import router from "../../router";
 import useUser from "../../store/user";
 

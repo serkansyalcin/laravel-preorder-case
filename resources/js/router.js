@@ -32,7 +32,52 @@ const routes = [
         path: 'login',
         name: 'AdminLogin',
         component: () => import(/* webpackChunkName: "admin-login" */ './pages/admin/Login.vue')
-      }
+      },
+      {
+        path: 'products',
+        component: AdminLayout,
+        children: [
+          {
+            path: '',
+            name: "productLists",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/products/ProductLists.vue')
+          }
+        ]
+      },
+      {
+        path: 'orders',
+        component: AdminLayout,
+        children: [
+          {
+            path: '',
+            name: "orderLists",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/orders/OrderLists.vue')
+          }
+        ]
+      },
+      {
+        path: 'users',
+        component: AdminLayout,
+        children: [
+          {
+            path: '',
+            name: "userLists",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/users/UserLists.vue')
+          }
+        ]
+      },
+
+      {
+        path: 'profile',
+        component: AdminLayout,
+        children: [
+          {
+            path: '',
+            name: "profilePage",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/profile/Profile.vue')
+          }
+        ]
+      },
     ]
   },
   {
