@@ -41,7 +41,18 @@ const routes = [
             path: '',
             name: "productLists",
             component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/products/ProductLists.vue')
-          }
+          },
+          {
+            path: 'create',
+            name: "ProductCreateForm",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/products/ProductCreateForm.vue')
+          },
+          {
+            path: 'edit/:productId',
+            name: 'ProductEditForm',
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/products/ProductEditForm.vue'),
+            props: true, // Allows passing route params as props
+          },
         ]
       },
       {
