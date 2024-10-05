@@ -32,7 +32,63 @@ const routes = [
         path: 'login',
         name: 'AdminLogin',
         component: () => import(/* webpackChunkName: "admin-login" */ './pages/admin/Login.vue')
-      }
+      },
+      {
+        path: 'products',
+        component: AdminLayout,
+        children: [
+          {
+            path: '',
+            name: "productLists",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/products/ProductLists.vue')
+          },
+          {
+            path: 'create',
+            name: "ProductCreateForm",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/products/ProductCreateForm.vue')
+          },
+          {
+            path: 'edit/:productId',
+            name: 'ProductEditForm',
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/products/ProductEditForm.vue'),
+            props: true, // Allows passing route params as props
+          },
+        ]
+      },
+      {
+        path: 'orders',
+        component: AdminLayout,
+        children: [
+          {
+            path: '',
+            name: "orderLists",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/orders/OrderLists.vue')
+          }
+        ]
+      },
+      {
+        path: 'users',
+        component: AdminLayout,
+        children: [
+          {
+            path: '',
+            name: "userLists",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/users/UserLists.vue')
+          }
+        ]
+      },
+
+      {
+        path: 'profile',
+        component: AdminLayout,
+        children: [
+          {
+            path: '',
+            name: "profilePage",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/profile/Profile.vue')
+          }
+        ]
+      },
     ]
   },
   {
