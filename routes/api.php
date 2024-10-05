@@ -13,7 +13,7 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanct
 
 // User
 Route::prefix('user')->group(function () {
-    Route::get('login', [AuthController::class, 'userLogin'])->name('login');
+    Route::post('login', [AuthController::class, 'userLogin'])->name('user.login');
 })->name('user.*');
 
 // Admin

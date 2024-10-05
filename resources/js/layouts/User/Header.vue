@@ -4,7 +4,7 @@
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
         <div class="flex-shrink-0">
-          <a href="#" class="text-2xl font-bold text-gray-800">PreOrder</a>
+          <RouterLink to="/" class="text-2xl font-bold text-gray-800">PreOrder</RouterLink>
         </div>
         <!-- Hamburger Menu (Mobile) -->
         <div class="md:hidden">
@@ -25,7 +25,7 @@
           <RouterLink to="/orders" class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">
             Orders
           </RouterLink>
-          <RouterLink v-if="dataUser.user != null" to="/admin/profile"
+          <RouterLink v-if="dataUser.user != null" to="/profile"
             class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">{{
               dataUser.user.name
             }}
@@ -34,9 +34,9 @@
             v-if="dataUser.user != null">
             Logout
           </button>
-          <button @click="login" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md" v-else>
+          <RouterLink to="/login" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md" v-else>
             Login
-          </button>
+          </RouterLink>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
         <RouterLink to="/admin/orders"
           class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
           Orders</RouterLink>
-        <RouterLink v-if="dataUser.user != null" to="/admin/profile"
+        <RouterLink v-if="dataUser.user != null" to="/profile"
           class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">{{
             dataUser.user.name
           }}</RouterLink>

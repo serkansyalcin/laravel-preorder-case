@@ -13,8 +13,21 @@ class AuthController extends Controller
 {
     public function userLogin(Request $request)
     {
-        dd("User Login Request");
+        $user = User::where(['email' => $request->email, 'is_admin' => false])->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+
+        return response()->json([
+            'token' => $user->createToken("user." . $user->name, ['user'])->plainTextToken,
+            'data' => $user,
+            'message' => 'login successfully'
+        ]);
     }
+
 
     /**
      * Handle an admin login request.

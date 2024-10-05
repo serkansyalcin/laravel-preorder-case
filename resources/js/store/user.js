@@ -17,6 +17,24 @@ const useUser = defineStore('user', () => {
     }
   }
 
+  const loginUser = async (email, password) => {
+
+    const bodyParameters = {
+      email: email,
+      password: password
+    };
+
+    const { data } = await axiosInstance.post('/user/login', bodyParameters)
+      .then(function (result) {
+        user.value = result.data.data
+        token.value = result.data.token
+        localStorage.setItem('token', result.data.token)
+        return true;
+      })
+      .catch(console.log);
+
+  }
+
   // Logout the user
   const logout = async () => {
     if (token.value) {
@@ -37,6 +55,7 @@ const useUser = defineStore('user', () => {
     token,
     user,
     login,
+    loginUser,
     fetchUser,
     logout
   }
