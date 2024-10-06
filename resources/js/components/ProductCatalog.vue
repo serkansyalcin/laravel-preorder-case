@@ -3,8 +3,8 @@
         <div v-if="!showCheckoutForm">
             <h1 class="text-3xl font-bold mb-6">Product Catalog</h1>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <ProductCard v-for="product in products" :key="product.id" :product="product" @add-to-cart="addToCart"
-                    @show-product="showProduct" />
+                <ProductCard v-for="product in productStore.products" :key="product.id" :product="product"
+                    @add-to-cart="addToCart" @show-product="showProduct" />
             </div>
         </div>
         <!-- Cart Table -->
@@ -66,7 +66,7 @@
     </div>
 
     <!-- Order Form -->
-    <div v-if="showCheckoutForm" class="container mx-auto p-4">
+    <div v-if="showCheckoutForm && userStore.user != null" class="container mx-auto p-4">
         <h2 class="text-2xl font-bold mb-4">Order Form</h2>
         <form @submit.prevent="submitOrder" class="bg-white p-6 rounded-lg shadow-md">
             <div class="mb-4">
@@ -78,6 +78,16 @@
                 <label for="lastName" class="block font-medium mb-2">Last Name</label>
                 <input type="text" id="lastName" v-model="order.lastName" class="w-full px-4 py-2 border rounded-lg"
                     required />
+            </div>
+            <div class="mb-4">
+                <label for="lastName" class="block font-medium mb-2">Billing Address</label>
+                <input type="text" id="lastName" v-model="order.shipping_address"
+                    class="w-full px-4 py-2 border rounded-lg" required />
+            </div>
+            <div class="mb-4">
+                <label for="lastName" class="block font-medium mb-2">Shipping Address</label>
+                <input type="text" id="lastName" v-model="order.billing_address"
+                    class="w-full px-4 py-2 border rounded-lg" required />
             </div>
             <div class="mb-4">
                 <label for="email" class="block font-medium mb-2">Email</label>
@@ -98,100 +108,170 @@
         </form>
     </div>
 
+    <div v-if="showCheckoutForm && userStore.user == null" class="container mx-auto p-4">
+        <section class="hero-section bg-slate-400 rounded-lg shadow-md p-6">
+            <div class="container mx-auto text-center py-20">
+                <h1 class="text-4xl font-bold text-white">Account Information</h1>
+                <p class="text-lg text-white mt-4 mb-4">To continue the order, you need to login or register</p>
+                <RouterLink to="/login" class="mt-6 px-6 py-3 bg-blue-600 text-white rounded-md mr-2">
+                    Login
+                </RouterLink>
+                <RouterLink to="/register" class="mt-6 px-6 py-3 bg-blue-600 text-white rounded-md">
+                    Register
+                </RouterLink>
+            </div>
+        </section>
+    </div>
+
     <ProductDetailModal v-if="isVisible" :product="selectedProduct" :isVisible="isVisible" @add-to-cart="addToCart"
         @cancel="closeModal" />
 </template>
 
-<script>
+<script setup>
+import { ref, computed, onMounted } from "vue";
 import ProductCard from './ProductCard.vue';
 import ProductDetailModal from './ProductDetailModal.vue';
+import useProduct from '../store/product';
+import useOrderUser from '../store/orderUser'
+import useUser from '../store/user'
+import Swal from 'sweetalert2'
 
-export default {
-    components: {
-        ProductCard,
-        ProductDetailModal
-    },
-    data() {
-        return {
-            products: [
-                { id: 1, name: "Nike Dunk Low Women", price: 499, image: "https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/af53d53d-561f-450a-a483-70a7ceee380f/W+NIKE+DUNK+LOW.png" },
-                { id: 2, name: "Nike SB Force 58 Premium Skate Shoes", price: 399, image: "https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/da8e413a-ea84-4602-88ff-05921db36358/NIKE+SB+FORCE+58+PRM+L.png" },
-                { id: 3, name: "Nike Cortez Leather Men's Shoes", price: 259, image: "https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/3f6f52e9-f18a-4eb2-8788-61bc06f08a5a/NIKE+CORTEZ.png" },
-                { id: 4, name: "Nike Air Force 1 '07 Men's Shoes", price: 419, image: "https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/51a183a0-6e1b-4de7-a1ca-ba88b9bbb36f/AIR+FORCE+1+%2707.png" },
-            ],
-            cart: [],
-            showCheckoutForm: false,
-            order: {
-                firstName: '',
-                lastName: '',
-                email: '',
-                phone: '',
-            },
-            errors: {
-                email: null,
-                phone: null,
-            },
-            selectedProduct: null,
-            isVisible: false
-        };
-    },
-    computed: {
-        cartTotal() {
-            return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
-        },
-        isFormValid() {
-            return this.order.firstName && this.order.lastName && this.order.email && this.order.phone && !this.errors.email && !this.errors.phone;
-        },
-    },
-    methods: {
-        addToCart(product) {
-            const cartItem = this.cart.find((item) => item.id === product.id);
-            if (cartItem) {
-                cartItem.quantity++;
-            } else {
-                this.cart.push({ ...product, quantity: 1 });
-            }
-            this.isVisible = false;
-        },
-        increaseQty(item) {
-            item.quantity++;
-        },
-        decreaseQty(item) {
-            if (item.quantity > 1) {
-                item.quantity--;
-            }
-        },
-        removeFromCart(item) {
-            this.cart = this.cart.filter(cartItem => cartItem.id !== item.id);
-        },
-        checkout() {
-            this.showCheckoutForm = true;
-        }, validateEmail() {
-            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            this.errors.email = emailPattern.test(this.order.email) ? null : 'Please enter a valid email address.';
-        },
-        validatePhone() {
-            const phonePattern = /^[0-9]{10,15}$/;
-            this.errors.phone = phonePattern.test(this.order.phone) ? null : 'Please enter a valid phone number.';
-        },
-        submitOrder() {
-            if (this.isFormValid) {
-                alert(`Order submitted for ${this.order.firstName} ${this.order.lastName}!`);
-                // Handle order submission (e.g., API call)
-                this.showCheckoutForm = false;
-                this.order = { firstName: '', lastName: '', email: '', phone: '' }; // Reset form
-                this.cart = [];
-            }
-        },
-        showProduct(product) {
-            this.selectedProduct = product;
-            this.isVisible = true;
-        },
-        closeModal() {
-            this.isVisible = false;
-        }
-    },
+const productStore = useProduct();
+const orderUserStore = useOrderUser();
+const userStore = useUser();
+
+console.log(userStore.user);
+
+const cart = ref([]);
+const showCheckoutForm = ref(false);
+
+const order = ref({
+    firstName: userStore.user.first_name ?? '',
+    lastName: userStore.user.last_name ?? '',
+    email: userStore.user.email ?? '',
+    phone: userStore.user.phone ?? '',
+});
+
+const errors = ref({
+    email: null,
+    phone: null,
+});
+
+const selectedProduct = ref(null);
+const isVisible = ref(false);
+
+const cartTotal = computed(() => {
+    return cart.value.reduce((total, item) => total + item.price * item.quantity, 0);
+});
+
+const isFormValid = computed(() => {
+    return (
+        order.value.firstName &&
+        order.value.lastName &&
+        order.value.email &&
+        order.value.phone &&
+        !errors.value.email &&
+        !errors.value.phone
+    );
+});
+
+const addToCart = (product) => {
+    const cartItem = cart.value.find((item) => item.id === product.id);
+    if (cartItem) {
+        cartItem.quantity++;
+    } else {
+        cart.value.push({ ...product, quantity: 1 });
+    }
+    isVisible.value = false;
 };
+
+const increaseQty = (item) => {
+    item.quantity++;
+};
+
+const decreaseQty = (item) => {
+    if (item.quantity > 1) {
+        item.quantity--;
+    }
+};
+
+const removeFromCart = (item) => {
+    cart.value = cart.value.filter(cartItem => cartItem.id !== item.id);
+};
+
+const checkout = () => {
+    showCheckoutForm.value = true;
+};
+
+const validateEmail = () => {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    errors.value.email = emailPattern.test(order.value.email)
+        ? null
+        : 'Please enter a valid email address.';
+};
+
+const validatePhone = () => {
+    const phonePattern = /^[0-9]{10,15}$/;
+    errors.value.phone = phonePattern.test(order.value.phone)
+        ? null
+        : 'Please enter a valid phone number.';
+};
+
+const submitOrder = async () => {
+    if (isFormValid.value) {
+        alert(`Order submitted for ${order.value.firstName} ${order.value.lastName}!`);
+
+        order.value.items = cart.value.map(function (value) {
+            value.product_id = value.id
+            value.qty = value.quantity
+            return value;
+        });
+
+        try {
+            await orderUserStore.createOrder(order.value);
+            // Check for any error after the call
+            if (orderUserStore.error == null) {
+                Swal.fire({
+                    title: "Created!",
+                    text: "The product was successfully created",
+                    icon: "success"
+                });
+
+                showCheckoutForm.value = false;
+                order.value = { firstName: '', lastName: '', email: '', phone: '' }; // Reset form
+                cart.value = [];
+            } else {
+                // Catch any unexpected errors (e.g., network issues)
+                console.log("Error in component:", error);
+                Swal.fire({
+                    title: "Error",
+                    text: "An unexpected error occurred. Please try again later.",
+                    icon: "error"
+                });
+            }
+        } catch (error) {
+
+        }
+    }
+};
+
+const showProduct = (product) => {
+    selectedProduct.value = product;
+    isVisible.value = true;
+};
+
+const closeModal = () => {
+    isVisible.value = false;
+};
+
+onMounted(async () => {
+    try {
+        await productStore.fetchPublicProduct();
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 </script>
 
 <style scoped></style>

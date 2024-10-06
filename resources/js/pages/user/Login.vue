@@ -48,6 +48,7 @@
 import { ref } from 'vue';
 import router from '../../router';
 import useUser from '../../store/user';
+import Swal from 'sweetalert2'
 
 const email = ref('');
 const password = ref('');
@@ -75,11 +76,15 @@ const submitForm = () => {
         errors.value.password = 'Password must be at least 6 characters long.';
     }
 
-    // If no validation errors, proceed with form submission logic
     if (!errors.value.email && !errors.value.password) {
-        // Simulate login process (replace with actual login logic or API call)
         user.loginUser(email.value, password.value).then((result) => {
-            router.go("/")
+            Swal.fire({
+                title: "Success!",
+                text: "Login successfully",
+                icon: "success"
+            }).then(() => {
+                router.push('/');
+            });
         }).catch((err) => {
             formError.value = 'Invalid email or password.';
         });

@@ -4,6 +4,7 @@ import axiosInstance from "../lib/axios";
 
 const useUser = defineStore('user', () => {
   const user = ref(null)
+  const users = ref(null)
   const token = ref("")
 
   // Fetching the user detials if token found in localstorage
@@ -14,6 +15,17 @@ const useUser = defineStore('user', () => {
       const { data } = await axiosInstance.get('/me')
       token.value = localToken;
       user.value = data.data
+    }
+  }
+
+  // Fetching the user detials if token found in localstorage
+  const fetchUsers = async () => {
+    const localToken = localStorage.getItem("token")
+
+    if (localToken) {
+      const { data } = await axiosInstance.get('/admin/user/list')
+      token.value = localToken;
+      users.value = data.data
     }
   }
 
@@ -54,9 +66,11 @@ const useUser = defineStore('user', () => {
   return {
     token,
     user,
+    users,
     login,
     loginUser,
     fetchUser,
+    fetchUsers,
     logout
   }
 })

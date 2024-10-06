@@ -81,6 +81,7 @@ const routes = [
       },
       {
         path: 'orders',
+        name: 'adminOrders',
         component: AdminLayout,
         children: [
           {

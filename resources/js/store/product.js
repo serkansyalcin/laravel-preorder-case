@@ -26,6 +26,21 @@ const useProduct = defineStore('product', () => {
     }
   };
 
+  // Fetching product details if token is found in localstorage
+  const fetchPublicProduct = async () => {
+    try {
+      loading.value = true;
+      const { data } = await axiosInstance.get('user/product/list');
+      products.value = data.data;
+      error.value = null; // Clear any previous errors
+    } catch (err) {
+      error.value = "Failed to fetch products";
+      console.error("API Error:", err);
+    } finally {
+      loading.value = false;
+    }
+  };
+
   // Fetching product detail if token is found in localstorage
   const showProduct = async (productId) => {
     const localToken = localStorage.getItem("token");
@@ -94,6 +109,7 @@ const useProduct = defineStore('product', () => {
     error,
     loading,
     fetchProduct,
+    fetchPublicProduct,
     showProduct,
     createProduct,
     updateProduct,

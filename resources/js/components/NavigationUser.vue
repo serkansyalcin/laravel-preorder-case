@@ -75,6 +75,8 @@ import useUser from '../store/user';
 const dataUser = useUser();
 const isOpen = ref(false);
 
+console.log(dataUser);
+
 const logout = async () => {
     await dataUser.logout();
     router.push({
