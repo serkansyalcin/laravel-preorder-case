@@ -49,6 +49,11 @@ const routes = [
             path: '',
             name: "AdminDashboard",
             component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/Home.vue')
+          },
+          {
+            path: 'orders',
+            name: "AdminOrderLists",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/orders/OrderLists.vue')
           }
         ]
       },
@@ -77,18 +82,6 @@ const routes = [
             component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/products/ProductEditForm.vue'),
             props: true, // Allows passing route params as props
           },
-        ]
-      },
-      {
-        path: 'orders',
-        name: 'adminOrders',
-        component: AdminLayout,
-        children: [
-          {
-            path: '',
-            name: "orderLists",
-            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/orders/OrderLists.vue')
-          }
         ]
       },
       {

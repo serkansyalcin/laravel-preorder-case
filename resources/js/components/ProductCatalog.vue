@@ -140,16 +140,16 @@ const productStore = useProduct();
 const orderUserStore = useOrderUser();
 const userStore = useUser();
 
-console.log(userStore.user);
-
 const cart = ref([]);
 const showCheckoutForm = ref(false);
 
 const order = ref({
-    firstName: userStore.user.first_name ?? '',
-    lastName: userStore.user.last_name ?? '',
-    email: userStore.user.email ?? '',
-    phone: userStore.user.phone ?? '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    billing_address: '',
+    shipping_address: '',
 });
 
 const errors = ref({
