@@ -17,8 +17,15 @@
     <form @submit.prevent="updateProfile">
         <!-- First Name -->
         <div class="mb-4">
-            <label class="block text-gray-700">Full Name</label>
-            <input v-model="name" type="text"
+            <label class="block text-gray-700">First Name</label>
+            <input v-model="first_name" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter your first name" />
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700">Last Name</label>
+            <input v-model="last_name" type="text"
                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter your first name" />
         </div>
@@ -60,7 +67,8 @@ onMounted(async () => {
 
 const dataUser = useUser();
 
-const name = ref(dataUser.user.name);
+const first_name = ref(dataUser.user.first_name);
+const last_name = ref(dataUser.user.last_name);
 const email = ref(dataUser.user.email);
 const phoneNumber = ref(dataUser.user.phoneNumber);
 
