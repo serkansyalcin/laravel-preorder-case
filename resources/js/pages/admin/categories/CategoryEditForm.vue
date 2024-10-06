@@ -98,6 +98,7 @@ const submitForm = async () => {
             } else {
                 Swal.fire({
                     title: "Something went wrong!",
+                    text: categoryStore.error,
                     icon: "warning"
                 });
             }

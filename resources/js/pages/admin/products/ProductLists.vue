@@ -67,6 +67,7 @@ import router from "../../../router";
 import useProduct from '../../../store/product'
 import Swal from 'sweetalert2'
 
+const productStore = useProduct();
 
 onMounted(async () => {
     try {

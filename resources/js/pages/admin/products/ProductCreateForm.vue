@@ -78,6 +78,7 @@ const form = ref({
     price: '',
     category_id: '',
     sku: '',
+    image: null,
 });
 
 onMounted(async () => {
@@ -166,6 +167,7 @@ const submitForm = async () => {
             } else {
                 Swal.fire({
                     title: "Something went wrong!",
+                    text: productStore.error, /
                     icon: "warning"
                 });
             }
