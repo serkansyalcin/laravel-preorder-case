@@ -39,6 +39,12 @@ const routes = [
     props: true, // Allows passing route params as props
   },
   {
+    path: '/register',
+    name: 'registerUser',
+    component: () => import(/* webpackChunkName: "admin-home" */ './pages/user/Register.vue'),
+    props: true, // Allows passing route params as props
+  },
+  {
     path: '/admin',
     children: [
       {

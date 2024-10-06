@@ -37,9 +37,14 @@
             v-if="dataUser.user != null">
             Logout
           </button>
-          <RouterLink to="/login" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md" v-else>
-            Login
-          </RouterLink>
+          <div v-else>
+            <RouterLink to="/login" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md mr-2">
+              Login
+            </RouterLink>
+            <RouterLink to="/register" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md">
+              Register
+            </RouterLink>
+          </div>
         </div>
       </div>
     </div>

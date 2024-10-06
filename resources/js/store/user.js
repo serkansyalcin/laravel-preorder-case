@@ -6,6 +6,7 @@ const useUser = defineStore('user', () => {
   const user = ref(null)
   const users = ref(null)
   const token = ref("")
+  const error = ref("")
 
   // Fetching the user detials if token found in localstorage
   const fetchUser = async () => {
@@ -47,6 +48,21 @@ const useUser = defineStore('user', () => {
 
   }
 
+  const registerUser = async (payload) => {
+    const { data } = await axiosInstance.post('/user/register', payload)
+      .then(function (result) {
+        user.value = result.data.data
+        token.value = result.data.token
+        localStorage.setItem('token', result.data.token)
+        return true;
+      })
+      .catch((err) => {
+        error.value = err.response.data.message;
+        console.error("API Error:", err);
+      });
+
+  }
+
   // Logout the user
   const logout = async () => {
     if (token.value) {
@@ -66,11 +82,13 @@ const useUser = defineStore('user', () => {
   return {
     token,
     user,
+    error,
     users,
     login,
     loginUser,
     fetchUser,
     fetchUsers,
+    registerUser,
     logout
   }
 })

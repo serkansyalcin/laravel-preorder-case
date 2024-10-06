@@ -157,9 +157,6 @@ const submitForm = async () => {
         formData.append('sku', form.value.sku);
         formData.append('category_id', 1);
 
-        // Perform the form submission (e.g., send the data to an API)
-        console.log('Form submitted:', formData);
-
         try {
             // Await the asynchronous call to ensure errors are caught
             await productStore.createProduct(formData);
