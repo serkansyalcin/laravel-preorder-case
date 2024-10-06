@@ -125,7 +125,9 @@ class ProductController extends Controller
 
         $products = Product::findOrFail($id);
 
-        $image_path = $products->image;
+        
+        $image_path = '';
+        
         if ($request->hasFile('image')) {
             $image_path = $request->file('image')->store('products');
             if ($products->image) {
