@@ -46,7 +46,7 @@
         </table>
     </div>
     <!-- Confirmation Modal -->
-    <OrderDetailModal v-if="isModalVisible" :isVisible="isModalVisible" @confirm="confirmOrder" @cancel="closeModal"
+    <OrderDetailModal v-if="isModalVisible" :isVisible="isModalVisible" @cancel="closeModal"
         :selectedOrder="selectedOrder" />
 </template>
 

@@ -23,7 +23,7 @@ class UserOrderController extends Controller
     public function index()
     {
         //$order = $this->ordersService->all();
-        $order = Order::with(['users', 'orderItems'])->where('user_id', Auth::user()->id)->get();
+        $order = Order::with(['users', 'orderItems', 'orderItems.product'])->where('user_id', Auth::user()->id)->get();
 
         if (!$order) {
             return response()->json(['message' => 'Order not found'], 404);

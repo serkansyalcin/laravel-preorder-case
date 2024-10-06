@@ -61,7 +61,7 @@
                         <tr>
                             <td
                                 class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
-                                No</td>
+                                -</td>
                             <td
                                 class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
                                 Item</td>
@@ -78,8 +78,11 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in selectedOrder.order_items">
-                            <td class="px-2 py-2 border-b border-gray-300">{{ index + 1 }}</td>
-                            <td class="px-2 py-2 border-b border-gray-300">{{ item.product_id }}</td>
+                            <td class="px-2 py-2 border-b border-gray-300">
+                                <img :src="item.product.image" :alt="item.product.name"
+                                    class="w-full h-16 object-cover rounded-t-lg mb-4">
+                            </td>
+                            <td class="px-2 py-2 border-b border-gray-300">{{ item.product.name }}</td>
                             <td class="px-2 py-2 border-b border-gray-300">{{ item.qty }}</td>
                             <td class="px-2 py-2 border-b border-gray-300">${{ item.price }}</td>
                             <td class="px-2 py-2 border-b border-gray-300">${{ item.price * item.qty }}</td>
