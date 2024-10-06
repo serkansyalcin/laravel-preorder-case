@@ -2,7 +2,7 @@
     <div class="container mx-auto p-4">
         <div v-if="!showCheckoutForm">
             <h1 class="text-3xl font-bold mb-6">Product Catalog</h1>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <ProductCard v-for="product in productStore.products" :key="product.id" :product="product"
                     @add-to-cart="addToCart" @show-product="showProduct" />
             </div>
