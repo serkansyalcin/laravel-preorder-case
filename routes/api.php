@@ -29,6 +29,9 @@ Route::prefix('user')->group(function () {
             return response()->json(['message' => 'USER - ABILITIY | PASSED']);
         });
 
+        /*API - User Profile Update*/
+        Route::post('update-profile', [UserController::class, 'updateProfile'])->name('user.update');
+
         /*API - Order*/
         Route::get('order/list', [UserOrderController::class, 'index'])->name('order.index');
         Route::get('order/single/{id}', [UserOrderController::class, 'show'])->name('order.show');

@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Mail\OrderCreateMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserOrderController extends Controller
 {
@@ -102,6 +104,16 @@ class UserOrderController extends Controller
 
         // Update the total amount in the order
         $orderUpdate = $this->ordersService->update(['amount' => $totalAmount], $orderCreate->id);
+
+        $orders = Order::with('users','orderItems','orderItems.product')->where('id', $user->id)->first();
+        if (isset($orders) && !empty($orders)) {
+            $userData = $orders->users;
+            $data = [
+                'user' =>  $userData,
+                'order' => $orders
+            ];
+            Mail::to($userData->email)->send(new OrderCreateMail($data));
+        }
 
         return response()->json([
             'data' => $orderUpdate,

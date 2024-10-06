@@ -175,4 +175,56 @@ class UserController extends Controller
             'message' => "User deleted successfully."
         ], 200);
     }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function updateProfile(Request $request)
+    {
+        $id  = auth()->user()->id;
+        $request->request->add(['id' => $id]);
+
+        $rules = [
+            'id' => 'required|exists:\App\Models\User,id',
+            'first_name' => 'required|min:3|max:20',
+            'last_name' => 'required|min:3|max:20',
+            'email' => 'required|email|unique:\App\Models\User,email,' . $id,
+            'phone' => 'required|min:10|max:16',
+        ];
+
+        if ($request->filled('password')) {
+            $rules['password'] = 'nullable|min:6|max:12|confirmed';
+        }   
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()], 404);
+        }
+
+        $updateData = [
+            'first_name' => trim($request->first_name),
+            'last_name' => trim($request->last_name),
+            'email' => trim($request->email),
+            'phone' => trim($request->phone),
+        ];
+
+        if ($request->filled('password')) {
+            $password = trim($request->password);
+            $password = Hash::make($password);
+            $updateData['password'] = $password;
+        }
+
+        $user = $this->userService->update($updateData, $id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not updated'], 404);
+        }
+
+        return response()->json([
+            'data' => $user,
+            'message' => "User updated successfully."
+        ], 200);
+    }
+
 }
