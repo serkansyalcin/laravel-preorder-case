@@ -19,20 +19,20 @@
                 </div>
                 <div class="hidden md:flex md:items-center md:space-x-6">
                     <RouterLink class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium"
-                        to="/admin">Dashboard</RouterLink>
-                    <RouterLink to="/admin/products"
+                        active-class="bg-gray-200" to="/admin">Dashboard</RouterLink>
+                    <RouterLink to="/admin/products" active-class="bg-gray-200"
                         class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">Products
                     </RouterLink>
-                    <RouterLink to="/admin/orders"
+                    <RouterLink to="/admin/orders" active-class="bg-gray-200"
                         class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">Orders
                     </RouterLink>
-                    <RouterLink to="/admin/users"
+                    <RouterLink to="/admin/users" active-class="bg-gray-200"
                         class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">Users
                     </RouterLink>
-                    <RouterLink to="/admin/categories"
+                    <RouterLink to="/admin/categories" active-class="bg-gray-200"
                         class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">Categories
                     </RouterLink>
-                    <RouterLink to="/admin/profile"
+                    <RouterLink to="/admin/profile" active-class="bg-gray-200"
                         class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">{{
                             dataUser.user.first_name
                         }}
@@ -45,19 +45,19 @@
         </div>
         <div v-if="isOpen" class="md:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <RouterLink to="/admin"
+                <RouterLink to="/admin" active-class="bg-gray-200"
                     class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
                     Dashboard</RouterLink>
-                <RouterLink to="/admin/products"
+                <RouterLink to="/admin/products" active-class="bg-gray-200"
                     class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
                     Products</RouterLink>
-                <RouterLink to="/admin/orders"
+                <RouterLink to="/admin/orders" active-class="bg-gray-200"
                     class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
                     Orders</RouterLink>
-                <RouterLink to="/admin/categories"
+                <RouterLink to="/admin/categories" active-class="bg-gray-200"
                     class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
                     Categories</RouterLink>
-                <RouterLink to="/admin/profile"
+                <RouterLink to="/admin/profile" active-class="bg-gray-200"
                     class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">{{
                         dataUser.user.last_name
                     }}</RouterLink>

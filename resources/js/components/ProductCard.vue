@@ -5,7 +5,7 @@
         <h3 class="text-l font-semibold mb-2 h-12">{{ product.name }}</h3>
         <div class="flex justify-between items-center content-around">
             <p class="text-blue-700 text-l font-bold mb-4">$ {{ product.price }}</p>
-            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            <button class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600"
                 @click="$emit('add-to-cart', product)">
                 Add to Cart
             </button>

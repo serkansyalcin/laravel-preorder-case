@@ -4,55 +4,58 @@
             <div class="bg-white rounded-lg shadow-lg p-6">
                 <h4 class="text-md font-bold text-gray-800 mb-4">Order Details</h4>
                 <table class="min-w-full bg-white">
-                    <tr>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
-                            Order Number</td>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
-                            {{ selectedOrder.order_number }}</td>
-                    </tr>
-                    <tr>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
-                            Full Name</td>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
-                            {{ selectedOrder.users.first_name }} {{ selectedOrder.users.last_name }}</td>
-                    </tr>
-                    <tr>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
-                            Contact</td>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
-                            {{ selectedOrder.email }} - {{ selectedOrder.phone }}</td>
-                    </tr>
-                    <tr>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
-                            Billing Address</td>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
-                            {{ selectedOrder.billing_address }}</td>
-                    </tr>
-                    <tr>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
-                            Shipping Address</td>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
-                            {{ selectedOrder.shipping_address }}</td>
-                    </tr>
-                    <tr>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
-                            Status</td>
-                        <td
-                            class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
-                            <span class="px-2 px-2 bg-blue-500 rounded-md text-white">{{ selectedOrder.status }}</span>
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
+                                Order Number</td>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
+                                {{ selectedOrder.order_number }}</td>
+                        </tr>
+                        <tr>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
+                                Full Name</td>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
+                                {{ selectedOrder.users.first_name }} {{ selectedOrder.users.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
+                                Contact</td>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
+                                {{ selectedOrder.email }} - {{ selectedOrder.phone }}</td>
+                        </tr>
+                        <tr>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
+                                Billing Address</td>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
+                                {{ selectedOrder.billing_address }}</td>
+                        </tr>
+                        <tr>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
+                                Shipping Address</td>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
+                                {{ selectedOrder.shipping_address }}</td>
+                        </tr>
+                        <tr>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase">
+                                Status</td>
+                            <td
+                                class="px-6 py-3 border-b-2 border-gray-300 bg-white text-left text-xs font-semibold text-gray-600 uppercase">
+                                <span class="px-2 px-2 bg-blue-500 rounded-md text-white">{{ selectedOrder.status
+                                    }}</span>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
 
                 <h4 class="text-md font-bold text-gray-800 mb-4">Order Items</h4>
@@ -85,7 +88,8 @@
                             <td class="px-2 py-2 border-b border-gray-300">{{ item.product.name }}</td>
                             <td class="px-2 py-2 border-b border-gray-300">{{ item.qty }}</td>
                             <td class="px-2 py-2 border-b border-gray-300">${{ item.price }}</td>
-                            <td class="px-2 py-2 border-b border-gray-300">${{ item.price * item.qty }}</td>
+                            <td class="px-2 py-2 border-b border-gray-300">${{ (item.price * item.qty).toFixed(2) }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>

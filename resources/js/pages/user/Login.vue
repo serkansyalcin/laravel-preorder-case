@@ -56,7 +56,6 @@ const validateEmail = (email) => {
     return re.test(String(email).toLowerCase());
 };
 
-
 const submitForm = () => {
     errors.value = {};
     formError.value = '';
@@ -70,13 +69,18 @@ const submitForm = () => {
 
     if (!errors.value.email && !errors.value.password) {
         user.loginUser(email.value, password.value).then((result) => {
-            Swal.fire({
-                title: "Success!",
-                text: "Login successfully",
-                icon: "success"
-            }).then(() => {
-                router.push('/');
-            });
+            console.log(user.error)
+            if (user.error == null) {
+                Swal.fire({
+                    title: "Success!",
+                    text: "Login successfully",
+                    icon: "success"
+                }).then(() => {
+                    router.push('/');
+                });
+            } else {
+                formError.value = user.error;
+            }
         }).catch((err) => {
             formError.value = 'Invalid email or password.';
         });

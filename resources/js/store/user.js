@@ -41,10 +41,15 @@ const useUser = defineStore('user', () => {
       .then(function (result) {
         user.value = result.data.data
         token.value = result.data.token
+        error.value = null
         localStorage.setItem('token', result.data.token)
         return true;
       })
-      .catch(console.log);
+      .catch(function (err) {
+        error.value = err.response.data.message;
+        console.log("ERROR", err)
+        return false;
+      });
 
   }
 

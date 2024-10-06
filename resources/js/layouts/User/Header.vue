@@ -19,11 +19,11 @@
         <div class="hidden md:flex md:items-center md:space-x-6">
           <RouterLink class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium" to="/">
             Dashboard</RouterLink>
-          <RouterLink to="/orders" class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium"
-            v-if="dataUser.user != null">
+          <RouterLink to="/my-orders" class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium"
+            v-if="dataUser.user != null" exact active-class="bg-gray-200">
             Orders
           </RouterLink>
-          <RouterLink v-if="dataUser.user != null" to="/profile"
+          <RouterLink v-if="dataUser.user != null" to="/profile" active-class="bg-gray-200" exact
             class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">{{
               dataUser.user.first_name
             }} {{
@@ -47,22 +47,30 @@
     </div>
     <div v-if="isOpen" class="md:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1">
-        <RouterLink to="/admin"
+        <RouterLink to="/" active-class="bg-gray-200"
           class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
           Dashboard</RouterLink>
-        <RouterLink to="/orders"
+        <RouterLink to="/my-orders" active-class="bg-gray-200"
           class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium"
           v-if="dataUser.user != null">
           Orders</RouterLink>
-        <RouterLink v-if="dataUser.user != null" to="/profile"
+        <RouterLink v-if="dataUser.user != null" to="/profile" active-class="bg-gray-200"
           class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">{{
             dataUser.user.first_name
           }} {{
             dataUser.user.last_name
           }}</RouterLink>
-        <button @click="logout" class="px-4 py-2 bg-red-600 text-white text-sm rounded-md">
+        <button v-if="dataUser.user != null" @click="logout" class="px-4 py-2 bg-red-600 text-white text-sm rounded-md">
           Logout
         </button>
+        <div v-else>
+          <RouterLink to="/login" class="px-3 py-2 bg-blue-600 text-white text-sm rounded-md mr-2">
+            Login
+          </RouterLink>
+          <RouterLink to="/register" class="px-3 py-2 bg-blue-600 text-white text-sm rounded-md">
+            Register
+          </RouterLink>
+        </div>
       </div>
     </div>
   </nav>
