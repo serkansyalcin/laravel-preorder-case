@@ -22,7 +22,8 @@
         <div class="hidden md:flex md:items-center md:space-x-6">
           <RouterLink class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium" to="/">
             Dashboard</RouterLink>
-          <RouterLink to="/orders" class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">
+          <RouterLink to="/orders" class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium"
+            v-if="dataUser.user != null">
             Orders
           </RouterLink>
           <RouterLink v-if="dataUser.user != null" to="/profile"
@@ -48,11 +49,9 @@
         <RouterLink to="/admin"
           class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
           Dashboard</RouterLink>
-        <RouterLink to="/admin/products"
-          class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
-          Products</RouterLink>
-        <RouterLink to="/admin/orders"
-          class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
+        <RouterLink to="/orders"
+          class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium"
+          v-if="dataUser.user != null">
           Orders</RouterLink>
         <RouterLink v-if="dataUser.user != null" to="/profile"
           class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">{{

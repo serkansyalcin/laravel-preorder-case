@@ -20,7 +20,7 @@ class OrderController extends Controller
     public function index()
     {
         //$order = $this->ordersService->all();
-        $order = Order::with('users', 'orderItems')->get();
+        $order = Order::with('users', 'orderItems', 'orderItems.product')->get();
 
         if (!$order) {
             return response()->json(['message' => 'Order not found'], 404);
@@ -54,7 +54,7 @@ class OrderController extends Controller
     public function show(string $id)
     {
         //$order = $this->ordersService->find($id);
-        $order = Order::with('users', 'orderItems')->where('id', $id)->get();
+        $order = Order::with('users', 'orderItems', 'orderItems.product')->where('id', $id)->get();
 
         if (!$order) {
             return response()->json(['message' => 'Order not found'], 404);
