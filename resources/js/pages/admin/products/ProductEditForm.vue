@@ -19,6 +19,26 @@
         </div>
 
         <div class="mb-4">
+            <label for="name" class="block text-sm font-semibold text-gray-600 mb-2">SKU</label>
+            <input id="name" type="text" v-model="form.sku"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                :class="{ 'border-red-500': errors.sku }" />
+            <p v-if="errors.sku" class="text-red-500 text-sm mt-2">{{ errors.sku }}</p>
+        </div>
+
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-semibold text-gray-600 mb-2">Category</label>
+            <select v-model="form.category_id"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                :class="{ 'border-red-500': errors.category_id }">
+                <option value="">select category</option>
+                <option v-for="(category, index) in categoryStore.categories" :key="category.id" :value="category.id">{{
+                    category.name }}</option>
+            </select>
+            <p v-if="errors.category_id" class="text-red-500 text-sm mt-2">{{ errors.category_id }}</p>
+        </div>
+
+        <div class="mb-4">
             <label for="image" class="block text-sm font-semibold text-gray-600 mb-2">Product Image</label>
             <input id="image" type="file" @change="handleImageUpload"
                 class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -50,6 +70,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import ConfirmationBox from '../../../components/ConfirmationBox.vue';
+import useProduct from '../../../store/product';
+import useCategory from '../../../store/category';
+import Swal from 'sweetalert2'
+import router from '../../../router';
+
+const productStore = useProduct();
+const categoryStore = useCategory();
 
 const props = defineProps(
     {
@@ -87,17 +114,14 @@ const closeModal = () => {
 };
 
 const loadProductData = async () => {
-    const product = {
-        name: 'Sample Product',
-        price: 49.99,
-        stock: 100,
-        imageUrl: 'https://via.placeholder.com/400x300',
-    };
+    await productStore.showProduct(props.productId);
 
+    const product = productStore.products;
     form.value.name = product.name;
     form.value.price = product.price;
-    form.value.stock = product.stock;
-    existingImage.value = product.imageUrl;
+    form.value.sku = product.sku;
+    form.value.category_id = product.category_id;
+    existingImage.value = product.image;
 };
 
 const validateForm = () => {
@@ -128,21 +152,57 @@ const handleImageUpload = (event) => {
     }
 };
 
-const submitForm = () => {
+const submitForm = async () => {
     if (validateForm()) {
         const formData = new FormData();
         formData.append('name', form.value.name);
         formData.append('price', form.value.price);
+        formData.append('sku', form.value.sku);
+        formData.append('category_id', form.value.category_id);
         if (form.value.image) {
             formData.append('image', form.value.image);
         }
-        console.log('Form submitted:', form.value);
+        try {
+            // Await the asynchronous call to ensure errors are caught
+            await productStore.updateProduct(props.productId, formData);
+
+            // Check for any error after the call
+            if (productStore.error == null) {
+                Swal.fire({
+                    title: "Updated!",
+                    text: "The product was successfully updated",
+                    icon: "success"
+                });
+                // Redirect to the product list
+                router.push("/admin/products");
+            } else {
+                Swal.fire({
+                    title: "Something went wrong!",
+                    text: productStore.error, // Display the error message
+                    icon: "warning"
+                });
+            }
+        } catch (error) {
+            // Catch any unexpected errors (e.g., network issues)
+            console.log("Error in component:", error);
+            Swal.fire({
+                title: "Error",
+                text: "An unexpected error occurred. Please try again later.",
+                icon: "error"
+            });
+        }
+        closeModal();
     }
 };
 
 
-onMounted(() => {
-    loadProductData();
+onMounted(async () => {
+    try {
+        loadProductData();
+        await categoryStore.fetchCategory();
+    } catch (err) {
+        console.error('Error fetching product data:', err);
+    }
 });
 </script>
 

@@ -11,6 +11,26 @@
         </div>
 
         <div class="mb-4">
+            <label for="name" class="block text-sm font-semibold text-gray-600 mb-2">SKU</label>
+            <input id="name" type="text" v-model="form.sku"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                :class="{ 'border-red-500': errors.sku }" />
+            <p v-if="errors.sku" class="text-red-500 text-sm mt-2">{{ errors.sku }}</p>
+        </div>
+
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-semibold text-gray-600 mb-2">Category</label>
+            <select v-model="form.category_id"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                :class="{ 'border-red-500': errors.category_id }">
+                <option value="">select category</option>
+                <option v-for="(category, index) in categoryStore.categories" :key="category.id" :value="category.id">{{
+                    category.name }}</option>
+            </select>
+            <p v-if="errors.category_id" class="text-red-500 text-sm mt-2">{{ errors.category_id }}</p>
+        </div>
+
+        <div class="mb-4">
             <label for="price" class="block text-sm font-semibold text-gray-600 mb-2">Price ($)</label>
             <input id="price" type="number" v-model="form.price"
                 class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -30,7 +50,7 @@
         </div>
 
         <div class="mt-6">
-            <button @click="showConfirmInsert"
+            <button @click="showConfirmInsert" type="button"
                 class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
                 Create Product
             </button>
@@ -43,13 +63,31 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import ConfirmationBox from '../../../components/ConfirmationBox.vue';
+import useProduct from '../../../store/product';
+import useCategory from '../../../store/category';
+import router from '../../../router';
+import Swal from 'sweetalert2'
+
+const productStore = useProduct();
+const categoryStore = useCategory();
 
 const form = ref({
     name: '',
     price: '',
+    category_id: '',
+    sku: '',
     image: null, // to store the image file
+});
+
+onMounted(async () => {
+    try {
+        // Fetch the products
+        await categoryStore.fetchCategory();
+    } catch (err) {
+        console.error('Error fetching product data:', err);
+    }
 });
 
 const errors = ref({});
@@ -78,6 +116,15 @@ const validateForm = () => {
     if (!form.value.price || form.value.price <= 0) {
         newErrors.price = 'Please enter a valid price';
     }
+
+    if (!form.value.sku || form.value.sku <= 0) {
+        newErrors.sku = 'Please enter a valid sku';
+    }
+
+    if (!form.value.category_id || form.value.category_id <= 0) {
+        newErrors.category_id = 'Please select a category';
+    }
+
     if (!form.value.image) {
         newErrors.image = 'Product image is required';
     }
@@ -101,24 +148,49 @@ const handleImageUpload = (event) => {
     }
 };
 
-const submitForm = () => {
+const submitForm = async () => {
     if (validateForm()) {
         const formData = new FormData();
         formData.append('name', form.value.name);
         formData.append('price', form.value.price);
         formData.append('image', form.value.image);
+        formData.append('sku', form.value.sku);
+        formData.append('category_id', 1);
 
         // Perform the form submission (e.g., send the data to an API)
-        console.log('Form submitted:', form.value);
+        console.log('Form submitted:', formData);
 
-        // Example 
-        // axios.post('/api/products', formData)
-        //   .then(response => {
-        //     console.log('Product created successfully', response);
-        //   })
-        //   .catch(error => {
-        //     console.error('Error creating product', error);
-        //   });
+        try {
+            // Await the asynchronous call to ensure errors are caught
+            await productStore.createProduct(formData);
+
+            // Check for any error after the call
+            if (productStore.error == null) {
+                Swal.fire({
+                    title: "Created!",
+                    text: "The product was successfully created",
+                    icon: "success"
+                });
+                // Redirect to the product list
+                router.push("/admin/products");
+            } else {
+                Swal.fire({
+                    title: "Something went wrong!",
+                    text: productStore.error, // Display the error message
+                    icon: "warning"
+                });
+            }
+        } catch (error) {
+            // Catch any unexpected errors (e.g., network issues)
+            console.log("Error in component:", error);
+            Swal.fire({
+                title: "Error",
+                text: "An unexpected error occurred. Please try again later.",
+                icon: "error"
+            });
+        }
+        closeModal();
+
     }
 };
 </script>

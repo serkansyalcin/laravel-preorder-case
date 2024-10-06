@@ -33,7 +33,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(product, index) in products" :key="product.id" class="hover:bg-gray-100">
+                <tr v-for="(product, index) in productStore.products" :key="product.id" class="hover:bg-gray-100">
                     <td class="px-6 py-4 border-b border-gray-300">{{ index + 1 }}</td>
                     <td class="px-6 py-4 border-b border-gray-300">
                         <img :src="product.image" :alt="product.name"
@@ -68,12 +68,19 @@ import axiosInstance from "../../../lib/axios";
 import ConfirmationBox from "../../../components/ConfirmationBox.vue";
 import router from "../../../router";
 import useProduct from '../../../store/product'
+import Swal from 'sweetalert2'
 
-const { products, error, loading, fetchProduct } = useProduct();
+const productStore = useProduct(); // Get the store instance
 
 onMounted(async () => {
-    await axiosInstance.get("/admin/check");
-    fetchProduct()
+    try {
+        // Check if the user is authenticated
+        await axiosInstance.get("/admin/check");
+        // Fetch the products
+        await productStore.fetchProduct();
+    } catch (err) {
+        console.error('Error fetching product data:', err);
+    }
 });
 
 const isModalVisible = ref(false);
@@ -91,8 +98,13 @@ const closeModal = () => {
 
 const deleteProduct = () => {
     var id = selectedProduct.value.id;
-    products.value = products.value.filter((product) => product.id !== id);
-    console.log('Product deleted:', id);
+    productStore.deleteProduct(id);
     closeModal()
+
+    Swal.fire({
+        title: "Deleted!",
+        text: "The product successfully deleted",
+        icon: "success"
+    });
 };
 </script>
