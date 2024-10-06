@@ -68,6 +68,18 @@ const useUser = defineStore('user', () => {
 
   }
 
+  // Update an existing user
+  const updateUser = async (id, updateUser) => {
+    try {
+      const { data } = await axiosInstance.post(`admin/user/update/${id}`, updateUser);
+      user.value = data.data;
+      error.value = null;
+    } catch (err) {
+      error.value = err.response.data.message;
+      console.error("API Error:", err);
+    }
+  };
+
   // Logout the user
   const logout = async () => {
     if (token.value) {
@@ -94,7 +106,8 @@ const useUser = defineStore('user', () => {
     fetchUser,
     fetchUsers,
     registerUser,
-    logout
+    logout,
+    updateUser
   }
 })
 

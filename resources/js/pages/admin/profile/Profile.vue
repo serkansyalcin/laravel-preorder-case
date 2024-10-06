@@ -1,17 +1,6 @@
 <template>
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Profile</h2>
 
-    <div class="flex items-center justify-center mb-6">
-        <div class="relative">
-            <img class="h-32 w-32 rounded-full object-cover" :src="profileImage" alt="Profile Image" />
-            <button @click="updateProfileImage"
-                class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l5 5L20 7" />
-                </svg>
-            </button>
-        </div>
-    </div>
     <form @submit.prevent="updateProfile">
         <div class="mb-4">
             <label class="block text-gray-700">First Name</label>
@@ -54,6 +43,7 @@
 import { ref, onMounted } from "vue";
 import axiosInstance from "../../../lib/axios";
 import useUser from '../../../store/user';
+import Swal from 'sweetalert2'
 
 onMounted(async () => {
     await axiosInstance.get("/admin/check");
@@ -61,18 +51,43 @@ onMounted(async () => {
 
 const dataUser = useUser();
 
+const id = ref(dataUser.user.id);
 const first_name = ref(dataUser.user.first_name);
 const last_name = ref(dataUser.user.last_name);
 const email = ref(dataUser.user.email);
 const phoneNumber = ref(dataUser.user.phoneNumber);
 
-const profileImage = ref("https://via.placeholder.com/150");
+const updateProfile = async () => {
+    try {
+        const updateData = {
+            first_name: first_name.value,
+            last_name: last_name.value,
+            email: email.value,
+            phone: phoneNumber.value,
+        }
+        await dataUser.updateUser(id.value, updateData);
 
-const updateProfile = () => {
-    console.log("Profile updated:", name, email, phoneNumber);
-}
-const updateProfileImage = () => {
-    console.log("Profile image updated");
+        if (dataUser.error == null) {
+            Swal.fire({
+                title: "Created!",
+                text: "The product was successfully created",
+                icon: "success"
+            });
+        } else {
+            Swal.fire({
+                title: "Something went wrong!",
+                text: dataUser.error,
+                icon: "warning"
+            });
+        }
+    } catch (error) {
+        console.log("Error in component:", error);
+        Swal.fire({
+            title: "Error",
+            text: "An unexpected error occurred. Please try again later.",
+            icon: "error"
+        });
+    }
 }
 
 </script>
