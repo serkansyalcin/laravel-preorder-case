@@ -20,7 +20,7 @@ class Product extends Model
 
     public function getPriceAttribute()
     {
-        return number_format($this->attributes['price'], 2);
+        return $this->attributes['price'];
     }
 
     public function setImageAttribute($value)
