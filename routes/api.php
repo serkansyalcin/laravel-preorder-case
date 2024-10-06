@@ -19,6 +19,9 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanct
 Route::prefix('user')->group(function () {
     Route::post('login', [AuthController::class, 'userLogin'])->name('login');
 
+    Route::get('product/list', [ProductController::class, 'index'])->name('product.index');
+    Route::get('product/single/{id}', [ProductController::class, 'show'])->name('product.show');
+
     Route::middleware(['auth:sanctum', 'abilities:user'])->group(function () {
 
         Route::get('check', function (Request $request) {
