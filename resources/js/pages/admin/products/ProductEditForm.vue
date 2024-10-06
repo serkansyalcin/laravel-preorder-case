@@ -163,27 +163,22 @@ const submitForm = async () => {
             formData.append('image', form.value.image);
         }
         try {
-            // Await the asynchronous call to ensure errors are caught
             await productStore.updateProduct(props.productId, formData);
 
-            // Check for any error after the call
             if (productStore.error == null) {
                 Swal.fire({
                     title: "Updated!",
                     text: "The product was successfully updated",
                     icon: "success"
                 });
-                // Redirect to the product list
                 router.push("/admin/products");
             } else {
                 Swal.fire({
                     title: "Something went wrong!",
-                    text: productStore.error, // Display the error message
                     icon: "warning"
                 });
             }
         } catch (error) {
-            // Catch any unexpected errors (e.g., network issues)
             console.log("Error in component:", error);
             Swal.fire({
                 title: "Error",
@@ -205,7 +200,3 @@ onMounted(async () => {
     }
 });
 </script>
-
-<style scoped>
-/* Scoped styles for the form */
-</style>

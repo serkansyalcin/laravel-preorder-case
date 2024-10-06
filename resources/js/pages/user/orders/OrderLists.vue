@@ -1,7 +1,6 @@
 <template>
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Orders</h2>
 
-    <!-- orders Table -->
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white">
             <thead>
@@ -45,16 +44,13 @@
             </tbody>
         </table>
     </div>
-    <!-- Confirmation Modal -->
     <OrderDetailModal v-if="isModalVisible" :isVisible="isModalVisible" @cancel="closeModal"
         :selectedOrder="selectedOrder" />
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axiosInstance from "../../../lib/axios";
 import OrderDetailModal from "../../../components/OrderDetailModal.vue";
-import router from "../../../router";
 import useOrderUser from "../../../store/orderUser";
 
 const orderUserStore = useOrderUser();

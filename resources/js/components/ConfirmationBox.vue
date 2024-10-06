@@ -5,7 +5,6 @@
                 <h3 class="text-lg font-bold text-gray-800 mb-4">{{ title }}</h3>
                 <p class="text-gray-600 mb-6">{{ message }}</p>
 
-                <!-- Buttons -->
                 <div class="flex justify-end space-x-4">
                     <button @click="cancel" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">
                         Cancel
@@ -20,8 +19,6 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-
 export default {
     props: {
         title: {

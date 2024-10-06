@@ -1,39 +1,25 @@
 <template>
   <div class="min-h-screen flex items-center justify-center">
-    <form
-      @submit.prevent="submit"
-      class="max-w-md mx-auto w-full bg-white rounded-md p-8 space-y-8"
-    >
-      <!-- Email Address -->
+    <form @submit.prevent="submit" class="max-w-md mx-auto w-full bg-white rounded-md p-8 space-y-8">
       <div class="space-y-2">
         <label class="font-medium">Email</label>
-        <input
-          v-model="form.email"
-          class="w-full border border-gray-300 rounded-md bg-transparent"
-          placeholder="mail@example.com"
-        />
+        <input v-model="form.email" class="w-full border border-gray-300 rounded-md bg-transparent"
+          placeholder="mail@example.com" />
         <small class="text-red-500" v-if="form.invalid('email')">{{
           form.errors.email
-        }}</small>
+          }}</small>
       </div>
 
-      <!-- Password -->
       <div class="space-y-2">
         <label class="font-medium">Password</label>
-        <input
-          type="password"
-          v-model="form.password"
-          class="w-full border border-gray-300 rounded-md bg-transparent"
-        />
+        <input type="password" v-model="form.password"
+          class="w-full border border-gray-300 rounded-md bg-transparent" />
         <small class="text-red-500" v-if="form.invalid('email')">{{
           form.errors.password
-        }}</small>
+          }}</small>
       </div>
 
-      <button
-        :disabled="form.processing"
-        class="w-full py-2 px-4 rounded-lg bg-sky-600 text-white"
-      >
+      <button :disabled="form.processing" class="w-full py-2 px-4 rounded-lg bg-sky-600 text-white">
         {{ form.processing ? "Loading..." : "Login" }}
       </button>
     </form>

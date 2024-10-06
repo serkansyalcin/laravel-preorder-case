@@ -90,7 +90,6 @@
                     </tbody>
                 </table>
 
-                <!-- Buttons -->
                 <div class="flex justify-end space-x-4">
                     <button @click="cancel" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">
                         Close
@@ -102,8 +101,6 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-
 export default {
     props: {
         selectedOrder: {

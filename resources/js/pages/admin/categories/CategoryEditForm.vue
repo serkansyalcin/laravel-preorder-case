@@ -86,27 +86,22 @@ const submitForm = async () => {
         const formData = new FormData();
         formData.append('name', form.value.name);
         try {
-            // Await the asynchronous call to ensure errors are caught
             await categoryStore.updateCategory(props.categoryId, formData);
 
-            // Check for any error after the call
             if (categoryStore.error == null) {
                 Swal.fire({
                     title: "Updated!",
                     text: "The category was successfully updated",
                     icon: "success"
                 });
-                // Redirect to the product list
                 router.push("/admin/categories");
             } else {
                 Swal.fire({
                     title: "Something went wrong!",
-                    text: categoryStore.error, // Display the error message
                     icon: "warning"
                 });
             }
         } catch (error) {
-            // Catch any unexpected errors (e.g., network issues)
             console.log("Error in component:", error);
             Swal.fire({
                 title: "Error",

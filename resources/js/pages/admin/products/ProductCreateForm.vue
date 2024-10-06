@@ -78,12 +78,10 @@ const form = ref({
     price: '',
     category_id: '',
     sku: '',
-    image: null, // to store the image file
 });
 
 onMounted(async () => {
     try {
-        // Fetch the products
         await categoryStore.fetchCategory();
     } catch (err) {
         console.error('Error fetching product data:', err);
@@ -130,7 +128,6 @@ const validateForm = () => {
     }
     errors.value = newErrors;
 
-    // Return true if no errors, false if errors exist
     return Object.keys(newErrors).length === 0;
 };
 
@@ -139,7 +136,6 @@ const handleImageUpload = (event) => {
     if (file) {
         form.value.image = file;
 
-        // Show image preview
         const reader = new FileReader();
         reader.onload = (e) => {
             imagePreview.value = e.target.result;
@@ -158,27 +154,22 @@ const submitForm = async () => {
         formData.append('category_id', 1);
 
         try {
-            // Await the asynchronous call to ensure errors are caught
             await productStore.createProduct(formData);
 
-            // Check for any error after the call
             if (productStore.error == null) {
                 Swal.fire({
                     title: "Created!",
                     text: "The product was successfully created",
                     icon: "success"
                 });
-                // Redirect to the product list
                 router.push("/admin/products");
             } else {
                 Swal.fire({
                     title: "Something went wrong!",
-                    text: productStore.error, // Display the error message
                     icon: "warning"
                 });
             }
         } catch (error) {
-            // Catch any unexpected errors (e.g., network issues)
             console.log("Error in component:", error);
             Swal.fire({
                 title: "Error",
@@ -191,7 +182,3 @@ const submitForm = async () => {
     }
 };
 </script>
-
-<style scoped>
-/* Scoped styles for the form */
-</style>

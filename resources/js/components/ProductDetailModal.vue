@@ -3,12 +3,10 @@
         <div v-if="isVisible" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
             <div class="bg-white rounded-lg shadow-lg p-6">
                 <div class="flex flex-col md:flex-row">
-                    <!-- Product Image -->
                     <div class="md:w-1/2">
                         <img :src="product.image" :alt="product.name" class="w-full h-96 object-cover rounded-lg" />
                     </div>
 
-                    <!-- Product Details -->
                     <div class="md:w-1/2 md:ml-8 mt-6 md:mt-0">
                         <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ product.name }}</h1>
                         <p class="text-gray-600 mb-4">{{ product.description }}</p>
@@ -22,7 +20,6 @@
                     </div>
                 </div>
 
-                <!-- Buttons -->
                 <div class="flex justify-end space-x-4">
                     <button @click="close" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">
                         Close

@@ -57,17 +57,14 @@
 import { ref, onMounted } from "vue";
 import axiosInstance from "../../../lib/axios";
 import ConfirmationBox from "../../../components/ConfirmationBox.vue";
-import router from "../../../router";
 import useCategory from '../../../store/category'
 import Swal from 'sweetalert2'
 
-const categoryStore = useCategory(); // Get the store instance
+const categoryStore = useCategory();
 
 onMounted(async () => {
     try {
-        // Check if the user is authenticated
         await axiosInstance.get("/admin/check");
-        // Fetch the categorys
         await categoryStore.fetchCategory();
     } catch (err) {
         console.error('Error fetching category data:', err);

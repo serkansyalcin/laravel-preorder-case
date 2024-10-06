@@ -3,7 +3,6 @@
         <div class="bg-white shadow-md rounded-lg p-6 max-w-md w-full">
             <h2 class="text-2xl font-bold mb-4 text-center">Profile</h2>
 
-            <!-- Display user data -->
             <div v-if="dataUser.user" class="space-y-4">
                 <div class="text-lg">
                     <strong>First Name:</strong> {{ dataUser.user.first_name }}
@@ -19,12 +18,10 @@
                 </div>
             </div>
 
-            <!-- Error message if user is not found -->
             <div v-else>
                 <p class="text-red-500 text-center">User data not available. Please log in.</p>
             </div>
 
-            <!-- Logout button -->
             <div class="mt-6 flex justify-center">
                 <button @click="logout"
                     class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 focus:outline-none">

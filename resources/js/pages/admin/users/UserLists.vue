@@ -1,7 +1,5 @@
 <template>
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Users</h2>
-
-    <!-- Products Table -->
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white">
             <thead>
@@ -37,25 +35,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import axiosInstance from "../../../lib/axios";
-import ConfirmationBox from "../../../components/ConfirmationBox.vue";
-import router from "../../../router";
 import useUser from "../../../store/user";
 
 const userStore = useUser();
 
 onMounted(async () => {
     try {
-        // Check if the user is authenticated
         await axiosInstance.get("/admin/check");
-        // Fetch the products
         await userStore.fetchUsers();
     } catch (err) {
         console.error('Error fetching product data:', err);
     }
 });
-
-const isModalVisible = ref(false);
-const selectedProduct = ref(null);
 </script>

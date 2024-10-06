@@ -1,7 +1,6 @@
 <template>
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Orders</h2>
 
-    <!-- orders Table -->
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white">
             <thead>
@@ -54,12 +53,10 @@
             </tbody>
         </table>
     </div>
-    <!-- Confirmation Modal -->
     <ConfirmationOrderBox v-if="isModalVisible" title="Confirm this order?"
         :message="`Are you sure you want to confirm this order : ${selectedOrder.order_number}?`"
         :isVisible="isModalVisible" @confirm="confirmOrder" @cancel="closeModal" :selectedOrder="selectedOrder" />
 
-    <!-- Confirmation Modal -->
     <OrderDetailModal v-if="isModalDetailVisible" :isVisible="isModalDetailVisible" @cancel="closeModal"
         :selectedOrder="selectedOrder" />
 </template>

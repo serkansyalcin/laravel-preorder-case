@@ -1,7 +1,6 @@
 <template>
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Products</h2>
 
-    <!-- Add New Product Button -->
     <div class="mb-6">
         <RouterLink to="/admin/products/create">
             <button class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
@@ -10,7 +9,6 @@
         </RouterLink>
     </div>
 
-    <!-- Products Table -->
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white">
             <thead>
@@ -55,7 +53,6 @@
             </tbody>
         </table>
 
-        <!-- Confirmation Modal -->
         <ConfirmationBox v-if="isModalVisible" title="Delete Product"
             :message="`Are you sure you want to delete ${selectedProduct.name}?`" :isVisible="isModalVisible"
             @confirm="deleteProduct" @cancel="closeModal" />
@@ -70,13 +67,10 @@ import router from "../../../router";
 import useProduct from '../../../store/product'
 import Swal from 'sweetalert2'
 
-const productStore = useProduct(); // Get the store instance
 
 onMounted(async () => {
     try {
-        // Check if the user is authenticated
         await axiosInstance.get("/admin/check");
-        // Fetch the products
         await productStore.fetchProduct();
     } catch (err) {
         console.error('Error fetching product data:', err);

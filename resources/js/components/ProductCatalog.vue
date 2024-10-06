@@ -7,7 +7,6 @@
                     @add-to-cart="addToCart" @show-product="showProduct" />
             </div>
         </div>
-        <!-- Cart Table -->
         <div v-if="cart.length" class="mt-8">
             <h2 class="text-2xl font-bold mb-4">Cart</h2>
             <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
@@ -65,7 +64,6 @@
         </div>
     </div>
 
-    <!-- Order Form -->
     <div v-if="showCheckoutForm && userStore.user != null" class="container mx-auto p-4">
         <h2 class="text-2xl font-bold mb-4">Order Form</h2>
         <form @submit.prevent="submitOrder" class="bg-white p-6 rounded-lg shadow-md">

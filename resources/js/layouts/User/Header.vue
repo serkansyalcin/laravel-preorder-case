@@ -2,11 +2,9 @@
   <nav class="bg-white border-b border-gray-200">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <!-- Logo -->
         <div class="flex-shrink-0">
           <RouterLink to="/" class="text-2xl font-bold text-gray-800">PreOrder</RouterLink>
         </div>
-        <!-- Hamburger Menu (Mobile) -->
         <div class="md:hidden">
           <button @click="isOpen = !isOpen" type="button"
             class="text-gray-800 hover:text-gray-600 focus:outline-none focus:text-gray-600">
@@ -18,7 +16,6 @@
             </svg>
           </button>
         </div>
-        <!-- Navigation Links -->
         <div class="hidden md:flex md:items-center md:space-x-6">
           <RouterLink class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium" to="/">
             Dashboard</RouterLink>
@@ -48,7 +45,6 @@
         </div>
       </div>
     </div>
-    <!-- Mobile Menu -->
     <div v-if="isOpen" class="md:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1">
         <RouterLink to="/admin"
@@ -73,7 +69,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import router from "../../router";
 import useUser from '../../store/user';
 

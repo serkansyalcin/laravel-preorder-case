@@ -1,7 +1,6 @@
 <template>
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Profile</h2>
 
-    <!-- Profile Image -->
     <div class="flex items-center justify-center mb-6">
         <div class="relative">
             <img class="h-32 w-32 rounded-full object-cover" :src="profileImage" alt="Profile Image" />
@@ -13,9 +12,7 @@
             </button>
         </div>
     </div>
-    <!-- Profile Form -->
     <form @submit.prevent="updateProfile">
-        <!-- First Name -->
         <div class="mb-4">
             <label class="block text-gray-700">First Name</label>
             <input v-model="first_name" type="text"
@@ -30,7 +27,6 @@
                 placeholder="Enter your first name" />
         </div>
 
-        <!-- Email -->
         <div class="mb-4">
             <label class="block text-gray-700">Email</label>
             <input v-model="email" type="email"
@@ -38,7 +34,6 @@
                 placeholder="Enter your email" />
         </div>
 
-        <!-- Phone Number -->
         <div class="mb-4">
             <label class="block text-gray-700">Phone Number</label>
             <input v-model="phoneNumber" type="text"
@@ -46,7 +41,6 @@
                 placeholder="Enter your phone number" />
         </div>
 
-        <!-- Update Button -->
         <div class="mt-6">
             <button type="submit"
                 class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">

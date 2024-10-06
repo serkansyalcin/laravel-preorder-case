@@ -2,11 +2,10 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import axiosInstance from "../lib/axios";
 const useOrderUser = defineStore('order', () => {
-  const orders = ref(null); // To store order list
-  const error = ref(null); // To track errors
-  const loading = ref(false); // To track loading state for API requests
+  const orders = ref(null);
+  const error = ref(null);
+  const loading = ref(false);
 
-  // Fetching order details if token is found in localstorage
   const fetchOrder = async () => {
     const localToken = localStorage.getItem("token");
     if (localToken) {

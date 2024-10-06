@@ -2,11 +2,10 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import axiosInstance from "../lib/axios";
 const useCategory = defineStore('category', () => {
-  const categories = ref(null); // To store category list
-  const error = ref(null); // To track errors
-  const loading = ref(false); // To track loading state for API requests
+  const categories = ref(null);
+  const error = ref(null);
+  const loading = ref(false);
 
-  // Fetching category details if token is found in localstorage
   const fetchCategory = async () => {
     const localToken = localStorage.getItem("token");
     if (localToken) {

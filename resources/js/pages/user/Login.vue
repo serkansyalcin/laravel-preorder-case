@@ -3,9 +3,7 @@
         <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
             <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
 
-            <!-- Login Form -->
             <form @submit.prevent="submitForm" class="space-y-6">
-                <!-- Email Input -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">
                         Email
@@ -16,7 +14,6 @@
                     <p v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</p>
                 </div>
 
-                <!-- Password Input -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700">
                         Password
@@ -27,7 +24,6 @@
                     <p v-if="errors.password" class="text-red-500 text-sm mt-1">{{ errors.password }}</p>
                 </div>
 
-                <!-- Submit Button -->
                 <div>
                     <button type="submit"
                         class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none">
@@ -35,7 +31,6 @@
                     </button>
                 </div>
 
-                <!-- Error Message -->
                 <div v-if="formError" class="text-red-500 text-center mt-4">
                     {{ formError }}
                 </div>
@@ -56,7 +51,6 @@ const errors = ref({});
 const formError = ref('');
 const user = useUser();
 
-// Validate email format
 const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase());
@@ -64,11 +58,9 @@ const validateEmail = (email) => {
 
 
 const submitForm = () => {
-    // Reset error states
     errors.value = {};
     formError.value = '';
 
-    // Validate form
     if (!validateEmail(email.value)) {
         errors.value.email = 'Please enter a valid email address.';
     }
@@ -91,7 +83,3 @@ const submitForm = () => {
     }
 };
 </script>
-
-<style scoped>
-/* Add any additional styles here if needed */
-</style>

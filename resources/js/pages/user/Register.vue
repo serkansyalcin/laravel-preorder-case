@@ -24,7 +24,6 @@
                     <p v-if="errors.last_name" class="text-red-500 text-sm mt-1">{{ errors.last_name }}</p>
                 </div>
 
-                <!-- Email Input -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">
                         Email
@@ -45,7 +44,6 @@
                     <p v-if="errors.phone" class="text-red-500 text-sm mt-1">{{ errors.phone }}</p>
                 </div>
 
-                <!-- Password Input -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700">
                         Password
@@ -67,7 +65,6 @@
                         errors.password_confirmation }}</p>
                 </div>
 
-                <!-- Submit Button -->
                 <div>
                     <button type="submit"
                         class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none">
@@ -75,7 +72,6 @@
                     </button>
                 </div>
 
-                <!-- Error Message -->
                 <div v-if="formError" class="text-red-500 text-center mt-4">
                     {{ formError }}
                 </div>
