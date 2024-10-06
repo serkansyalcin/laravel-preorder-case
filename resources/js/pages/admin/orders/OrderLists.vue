@@ -29,11 +29,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(order, index) in orderStore.orders" :key="order.id" class="hover:bg-gray-100 cursor-pointer"
-                    @click="showOrderDetail(order)">
+                <tr v-for="(order, index) in orderStore.orders" :key="order.id" class="hover:bg-gray-100">
                     <td class="px-6 py-4 border-b border-gray-300">{{ index + 1 }}</td>
                     <td class="px-6 py-4 border-b border-gray-300">{{ order.order_number }}</td>
-                    <td class="px-6 py-4 border-b border-gray-300">
+                    <td class="px-6 py-4 border-b border-gray-300 cursor-pointer" @click="showOrderDetail(order)">
                         <b>{{ order.users.first_name }} {{ order.users.last_name }}</b> <br>
                         <span class="text-sm">Billing Address : {{ order.billing_address }}</span> <br>
                         <span class="text-sm">Shipping Address : {{ order.shipping_address }}</span>
