@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminLoginRequest;
 use App\Http\Requests\UserLoginRequest;
+use App\Http\Requests\UserRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -89,6 +91,45 @@ class AuthController extends Controller
         return response()->json([
             'data' => [],
             'message' => 'User logout successfully'
+        ]);
+    }
+
+    /**
+     * Handle a user registration request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function userRegister(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|min:3|max:20',
+            'last_name' => 'required|min:3|max:20',
+            'email' => 'required|email|unique:\App\Models\User,email',
+            'password' => 'required|min:6|max:12|confirmed',
+            'phone' => 'required|min:10|max:16'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()], 404);
+        }
+
+
+        $user = User::create([
+            'first_name' => $request['first_name'],
+            'last_name' => $request['last_name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'is_admin' => 0,
+            'password' => Hash::make($request['password']),
+        ]);
+
+        return response()->json([
+            'token' => $user->createToken("user." . $user->email, ['user'])->plainTextToken,
+            'data' => $user,
+            'message' => 'User registered successfully'
         ]);
     }
 }
