@@ -34,7 +34,7 @@
                     </RouterLink>
                     <RouterLink to="/admin/profile"
                         class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">{{
-                            dataUser.user.name
+                            dataUser.user.first_name
                         }}
                     </RouterLink>
                     <button @click="logout" class="px-4 py-2 bg-red-600 text-white text-sm rounded-md">
@@ -57,7 +57,7 @@
                     Orders</RouterLink>
                 <RouterLink to="/admin/profile"
                     class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">{{
-                        dataUser.user.name
+                        dataUser.user.last_name
                     }}</RouterLink>
                 <button @click="logout" class="px-4 py-2 bg-red-600 text-white text-sm rounded-md">
                     Logout

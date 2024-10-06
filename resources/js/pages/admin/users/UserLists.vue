@@ -26,7 +26,7 @@
             <tbody>
                 <tr v-for="(user, index) in userStore.users" :key="user.id" class="hover:bg-gray-100">
                     <td class="px-6 py-4 border-b border-gray-300">{{ index + 1 }}</td>
-                    <td class="px-6 py-4 border-b border-gray-300">{{ user.name }}</td>
+                    <td class="px-6 py-4 border-b border-gray-300">{{ user.first_name }}</td>
                     <td class="px-6 py-4 border-b border-gray-300">{{ user.last_name }}</td>
                     <td class="px-6 py-4 border-b border-gray-300">{{ user.phone }}</td>
                     <td class="px-6 py-4 border-b border-gray-300">{{ user.email }}</td>

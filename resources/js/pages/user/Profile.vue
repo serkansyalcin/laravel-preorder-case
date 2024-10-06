@@ -6,7 +6,10 @@
             <!-- Display user data -->
             <div v-if="dataUser.user" class="space-y-4">
                 <div class="text-lg">
-                    <strong>Name:</strong> {{ dataUser.user.name }}
+                    <strong>First Name:</strong> {{ dataUser.user.first_name }}
+                </div>
+                <div class="text-lg">
+                    <strong>Last Name:</strong> {{ dataUser.user.last_name }}
                 </div>
                 <div class="text-lg">
                     <strong>Email:</strong> {{ dataUser.user.email }}

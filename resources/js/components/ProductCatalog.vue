@@ -219,8 +219,6 @@ const validatePhone = () => {
 
 const submitOrder = async () => {
     if (isFormValid.value) {
-        alert(`Order submitted for ${order.value.firstName} ${order.value.lastName}!`);
-
         order.value.items = cart.value.map(function (value) {
             value.product_id = value.id
             value.qty = value.quantity
@@ -232,8 +230,8 @@ const submitOrder = async () => {
             // Check for any error after the call
             if (orderUserStore.error == null) {
                 Swal.fire({
-                    title: "Created!",
-                    text: "The product was successfully created",
+                    title: "Succesfully!",
+                    text: "Your order successfully created, please check your email to more detail",
                     icon: "success"
                 });
 
@@ -267,6 +265,13 @@ const closeModal = () => {
 onMounted(async () => {
     try {
         await productStore.fetchPublicProduct();
+
+        if (userStore.user != null) {
+            order.value.firstName = userStore.user.first_name;
+            order.value.lastName = userStore.user.last_name;
+            order.value.email = userStore.user.email;
+            order.value.phone = userStore.user.phone;
+        }
     } catch (error) {
         console.log(error);
     }
