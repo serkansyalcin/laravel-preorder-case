@@ -18,6 +18,7 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanct
 // User
 Route::prefix('user')->group(function () {
     Route::post('login', [AuthController::class, 'userLogin'])->name('login');
+    Route::post('register', [AuthController::class, 'userRegister'])->name('register');
 
     Route::get('product/list', [ProductController::class, 'index'])->name('product.index');
     Route::get('product/single/{id}', [ProductController::class, 'show'])->name('product.show');
