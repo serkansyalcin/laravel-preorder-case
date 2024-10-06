@@ -18,8 +18,8 @@
         </div>
     </form>
 
-    <ConfirmationBox v-if="isModalVisible" title="Create product"
-        :message="`Are you sure you want to insert this product?`" :isVisible="isModalVisible" @confirm="submitForm"
+    <ConfirmationBox v-if="isModalVisible" title="Create category"
+        :message="`Are you sure you want to insert this category?`" :isVisible="isModalVisible" @confirm="submitForm"
         @cancel="closeModal" />
 </template>
 
