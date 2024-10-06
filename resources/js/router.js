@@ -91,6 +91,28 @@ const routes = [
         ]
       },
       {
+        path: 'categories',
+        component: AdminLayout,
+        children: [
+          {
+            path: '',
+            name: "categoryLists",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/categories/CategoryLists.vue')
+          },
+          {
+            path: 'create',
+            name: "CategoryCreateForm",
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/categories/CategoryCreateForm.vue')
+          },
+          {
+            path: 'edit/:categoryId',
+            name: 'CategoryEditForm',
+            component: () => import(/* webpackChunkName: "admin-home" */ './pages/admin/categories/CategoryEditForm.vue'),
+            props: true, // Allows passing route params as props
+          },
+        ]
+      },
+      {
         path: 'users',
         component: AdminLayout,
         children: [

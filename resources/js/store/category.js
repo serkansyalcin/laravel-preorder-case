@@ -26,6 +26,25 @@ const useCategory = defineStore('category', () => {
     }
   };
 
+  const showCategory = async (productId) => {
+    const localToken = localStorage.getItem("token");
+    if (localToken) {
+      try {
+        loading.value = true;
+        const { data } = await axiosInstance.get('admin/category/single/' + productId);
+        categories.value = data.data;
+        error.value = null;
+      } catch (err) {
+        error.value = "Failed to fetch categories";
+        console.error("API Error:", err);
+      } finally {
+        loading.value = false;
+      }
+    } else {
+      error.value = "No token found";
+    }
+  };
+
   // Create a new category
   const createCategory = async (newcategory) => {
     try {
@@ -59,6 +78,7 @@ const useCategory = defineStore('category', () => {
     try {
       loading.value = true;
       await axiosInstance.post(`admin/category/destroy/${id}`);
+      categories.value = categories.value.filter((category) => category.id !== id); // Remove the deleted product from the list
       error.value = null;
     } catch (err) {
       error.value = "Failed to delete category";
@@ -76,6 +96,7 @@ const useCategory = defineStore('category', () => {
     createCategory,
     updateCategory,
     deleteCategory,
+    showCategory
   };
 });
 

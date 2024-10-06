@@ -33,11 +33,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <!-- Confirmation Modal -->
-        <ConfirmationBox v-if="isModalVisible" title="Delete Product"
-            :message="`Are you sure you want to delete ${selectedProduct.name}?`" :isVisible="isModalVisible"
-            @confirm="deleteProduct" @cancel="closeModal" />
     </div>
 </template>
 

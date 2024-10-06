@@ -32,6 +32,9 @@
                     <RouterLink to="/admin/users"
                         class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">Users
                     </RouterLink>
+                    <RouterLink to="/admin/categories"
+                        class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">Categories
+                    </RouterLink>
                     <RouterLink to="/admin/profile"
                         class="text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">{{
                             dataUser.user.first_name
@@ -55,6 +58,9 @@
                 <RouterLink to="/admin/orders"
                     class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
                     Orders</RouterLink>
+                <RouterLink to="/admin/categories"
+                    class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">
+                    Categories</RouterLink>
                 <RouterLink to="/admin/profile"
                     class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">{{
                         dataUser.user.last_name
