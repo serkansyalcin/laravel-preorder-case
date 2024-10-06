@@ -57,7 +57,7 @@
                     Orders</RouterLink>
                 <RouterLink to="/admin/profile"
                     class="block text-gray-800 hover:text-blue-500 px-3 py-2 rounded-md text-base font-medium">{{
-                        dataUser.user.first_name
+                        dataUser.user.first_name ?? "CEK"
                     }}</RouterLink>
                 <button @click="logout" class="px-4 py-2 bg-red-600 text-white text-sm rounded-md">
                     Logout

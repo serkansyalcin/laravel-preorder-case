@@ -12,7 +12,7 @@ const useOrderUser = defineStore('order', () => {
     if (localToken) {
       try {
         loading.value = true;
-        const { data } = await axiosInstance.get('order/list');
+        const { data } = await axiosInstance.get('user/order/list');
         orders.value = data.data;
         error.value = null; // Clear any previous errors
       } catch (err) {
