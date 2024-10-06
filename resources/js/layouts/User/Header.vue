@@ -60,9 +60,17 @@
           }} {{
             dataUser.user.last_name
           }}</RouterLink>
-        <button @click="logout" class="px-4 py-2 bg-red-600 text-white text-sm rounded-md">
+        <button v-if="dataUser.user != null" @click="logout" class="px-4 py-2 bg-red-600 text-white text-sm rounded-md">
           Logout
         </button>
+        <div v-else>
+          <RouterLink to="/login" class="px-3 py-2 bg-blue-600 text-white text-sm rounded-md mr-2">
+            Login
+          </RouterLink>
+          <RouterLink to="/register" class="px-3 py-2 bg-blue-600 text-white text-sm rounded-md">
+            Register
+          </RouterLink>
+        </div>
       </div>
     </div>
   </nav>
