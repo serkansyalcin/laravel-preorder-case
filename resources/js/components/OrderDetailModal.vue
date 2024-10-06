@@ -88,7 +88,8 @@
                             <td class="px-2 py-2 border-b border-gray-300">{{ item.product.name }}</td>
                             <td class="px-2 py-2 border-b border-gray-300">{{ item.qty }}</td>
                             <td class="px-2 py-2 border-b border-gray-300">${{ item.price }}</td>
-                            <td class="px-2 py-2 border-b border-gray-300">${{ item.price * item.qty }}</td>
+                            <td class="px-2 py-2 border-b border-gray-300">${{ (item.price * item.qty).toFixed(2) }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
