@@ -133,7 +133,10 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    component: () => import(/* webpackChunkName: "404" */ './pages/404.vue')
+    component: () => import(/* webpackChunkName: "404" */ './pages/404.vue'),
+    meta: {
+      ignorePublicPaths: true  // Custom flag to avoid public path interference
+    }
   }
 ]
 
