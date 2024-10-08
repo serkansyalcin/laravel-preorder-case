@@ -133,12 +133,15 @@ import useProduct from '../store/product';
 import useOrderUser from '../store/orderUser'
 import useUser from '../store/user'
 import Swal from 'sweetalert2'
+import { useCartStore } from "../store/cart";
 
 const productStore = useProduct();
 const orderUserStore = useOrderUser();
 const userStore = useUser();
+const cartStore = useCartStore();
+const cart = computed(() => cartStore.cart);
+const cartTotal = computed(() => cartStore.cartTotal);
 
-const cart = ref([]);
 const showCheckoutForm = ref(false);
 
 const order = ref({
@@ -158,10 +161,6 @@ const errors = ref({
 const selectedProduct = ref(null);
 const isVisible = ref(false);
 
-const cartTotal = computed(() => {
-    return cart.value.reduce((total, item) => total + item.price * item.quantity, 0);
-});
-
 const isFormValid = computed(() => {
     return (
         order.value.firstName &&
@@ -174,27 +173,19 @@ const isFormValid = computed(() => {
 });
 
 const addToCart = (product) => {
-    const cartItem = cart.value.find((item) => item.id === product.id);
-    if (cartItem) {
-        cartItem.quantity++;
-    } else {
-        cart.value.push({ ...product, quantity: 1 });
-    }
-    isVisible.value = false;
+    cartStore.addToCart(product);
 };
 
 const increaseQty = (item) => {
-    item.quantity++;
+    cartStore.addToCart(item);
 };
 
 const decreaseQty = (item) => {
-    if (item.quantity > 1) {
-        item.quantity--;
-    }
+    cartStore.decreaseQty(item);
 };
 
 const removeFromCart = (item) => {
-    cart.value = cart.value.filter(cartItem => cartItem.id !== item.id);
+    cartStore.removeFromCart(item);
 };
 
 const checkout = () => {
@@ -276,5 +267,6 @@ onMounted(async () => {
 });
 
 </script>
+
 
 <style scoped></style>
