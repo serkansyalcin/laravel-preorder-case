@@ -69,7 +69,6 @@ const submitForm = () => {
 
     if (!errors.value.email && !errors.value.password) {
         user.loginUser(email.value, password.value).then((result) => {
-            console.log(user.error)
             if (user.error == null) {
                 Swal.fire({
                     title: "Success!",
@@ -79,7 +78,14 @@ const submitForm = () => {
                     router.push('/');
                 });
             } else {
-                formError.value = user.error;
+                formError.value = user.error;                
+                Swal.fire({                    
+                    title: "Error!",
+                    text: 'Invalid email or password.',
+                    icon: "error"
+                }).then(() => {
+                    router.push('/login');
+                });
             }
         }).catch((err) => {
             formError.value = 'Invalid email or password.';
