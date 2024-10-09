@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { saveCartToLocal, getCartFromLocal  } from '../utils/cart';
+import { saveCartToLocal, getCartFromLocal, clearCartFromLocal  } from '../utils/cart';
 
 export const useCartStore = defineStore('cart', () => {
     const cart = ref(getCartFromLocal() || []);
@@ -38,6 +38,7 @@ export const useCartStore = defineStore('cart', () => {
   function clearCart() {
     cart.value = [];
     saveCartToLocal(cart.value);
+    clearCartFromLocal();
   }
 
   function removeFromCart(item) {

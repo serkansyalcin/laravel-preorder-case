@@ -28,7 +28,10 @@ axiosInstance.interceptors.response.use(
       if (location.pathname.startsWith('/admin')) {
         router.push('/admin/login');
       } else {
-        router.push('/');
+        if([403].includes(error.response.status)){
+          router.push('/');
+        }
+        
       }
     }
 

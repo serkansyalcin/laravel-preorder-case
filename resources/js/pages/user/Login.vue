@@ -78,14 +78,7 @@ const submitForm = () => {
                     router.push('/');
                 });
             } else {
-                formError.value = user.error;                
-                Swal.fire({                    
-                    title: "Error!",
-                    text: 'Invalid email or password.',
-                    icon: "error"
-                }).then(() => {
-                    router.push('/login');
-                });
+                formError.value = user.error;  
             }
         }).catch((err) => {
             formError.value = 'Invalid email or password.';
